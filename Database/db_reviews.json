@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "movie_name": "American Psycho",
+    "movie_genres": ["Thriller", "Horror"],
+    "movie_release_year": 2000,
+    "review_text": "Pretty damn good movie, the actors, soundtrack and the ideology behind the movie is just awesome!",
+    "review_score": 10,
+    "review_date": "31/08/2020 14:35"
+  }
+]

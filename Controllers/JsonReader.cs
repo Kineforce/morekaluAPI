@@ -103,7 +103,10 @@ namespace morekaluAPI.Controllers
 
             if (json_string != ""){
                 json_data = JsonSerializer.Deserialize<List<Review>>(json_string);
+                json_data.Reverse();
             } 
+
+            
 
             return json_data;
 

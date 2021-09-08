@@ -26,6 +26,7 @@ namespace morekaluAPI
                                     {
                                         builder.WithOrigins("*");
                                         builder.AllowAnyHeader();
+                                        builder.AllowAnyMethod();
                                     });
             });
             

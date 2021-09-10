@@ -12,16 +12,26 @@ namespace morekaluAPI.Controllers
         [HttpGet("reviews")]
         public List<Review> getReviews(){
             
-            JsonReader reader = new JsonReader("Database/db_reviews.json");
+            MoviesReader reader = new MoviesReader("Database/db_reviews.json");
 
             return reader.returnAllRecords();
 
         }
 
+        [HttpGet("reviews/total")]
+        public int getTotalReviews(){
+
+            MoviesReader reader = new MoviesReader("Database/db_reviews.json");
+
+            return reader.returnTotalRecords();
+
+        }
+
+
         [HttpPost("reviews")]
         public int postReview(Review _review){
 
-            JsonReader reader = new JsonReader("Database/db_reviews.json");
+            MoviesReader reader = new MoviesReader("Database/db_reviews.json");
 
             return reader.addRecord(_review);
         }
@@ -29,14 +39,14 @@ namespace morekaluAPI.Controllers
         [HttpDelete("reviews")]
         public bool deleteReview(int _id){
             
-            JsonReader reader = new JsonReader("Database/db_reviews.json");
+            MoviesReader reader = new MoviesReader("Database/db_reviews.json");
 
             return reader.deleteRecord(_id);
         }
 
         [HttpPut("reviews")]
         public bool updateReview(Review _updated_review){
-            JsonReader reader = new JsonReader("Database/db_reviews.json");
+            MoviesReader reader = new MoviesReader("Database/db_reviews.json");
 
             return reader.updateRecord(_updated_review);
         }

@@ -7,11 +7,11 @@ using System;
 namespace morekaluAPI.Controllers
 {
 
-    public class JsonReader {
+    public class MoviesReader {
         public StreamReader reader;
         public string file_path;
 
-        public JsonReader(string filename){
+        public MoviesReader(string filename){
             this.reader = new StreamReader(filename);
             this.file_path = filename;
         }
@@ -26,6 +26,17 @@ namespace morekaluAPI.Controllers
             }
 
             return max_id + 1;
+
+        }
+
+        public int returnTotalRecords(){
+
+            int cnt = 0;
+            foreach(Review review in this.returnAllRecords()){  
+                cnt++;
+            }
+
+            return cnt;
 
         }
 
@@ -105,8 +116,6 @@ namespace morekaluAPI.Controllers
                 json_data = JsonSerializer.Deserialize<List<Review>>(json_string);
                 json_data.Reverse();
             } 
-
-            
 
             return json_data;
 

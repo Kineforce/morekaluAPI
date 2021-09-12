@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Certificate;
+using SignalRChat.Hubs;
 
 namespace morekaluAPI
 {
@@ -20,18 +22,28 @@ namespace morekaluAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSignalR();
+
             services.AddCors(options => {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                     builder =>
                                     {
-                                        builder.WithOrigins("*");
+                                        builder.WithOrigins(
+                                            "http://localhost:4200/videoPlayer",
+                                            "http://localhost:4200/",
+                                            "http://localhost:4200"
+                                        );
                                         builder.AllowAnyHeader();
                                         builder.AllowAnyMethod();
+                                        builder.AllowCredentials();
                                     });
             });
             
             services.AddControllers();
 
+            services.AddAuthentication(
+                CertificateAuthenticationDefaults.AuthenticationScheme)
+                .AddCertificate();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,18 +54,22 @@ namespace morekaluAPI
                 app.UseDeveloperExceptionPage();               
             }
 
-            app.UseHttpsRedirection();
+            app.UseWebSockets();
+
+            //app.UseHttpsRedirection();
             
             app.UseRouting();
 
             app.UseCors(MyAllowSpecificOrigins);
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chatHub");
+
             });
         }
     }
